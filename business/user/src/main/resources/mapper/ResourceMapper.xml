@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengyecapital.business.dao.mapper.ResourceMapper">
+  <resultMap id="BaseResultMap" type="com.shengyecapital.business.dao.entity.Resource">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="authority_id" jdbcType="INTEGER" property="authorityId" />
+    <result column="http_method" jdbcType="TINYINT" property="httpMethod" />
+    <result column="ant_pattern" jdbcType="VARCHAR" property="antPattern" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, authority_id, http_method, ant_pattern, created_at, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_resource
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_resource
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shengyecapital.business.dao.entity.Resource">
+    insert into t_resource (id, authority_id, http_method, 
+      ant_pattern, created_at, updated_at
+      )
+    values (#{id,jdbcType=INTEGER}, #{authorityId,jdbcType=INTEGER}, #{httpMethod,jdbcType=TINYINT}, 
+      #{antPattern,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shengyecapital.business.dao.entity.Resource">
+    insert into t_resource
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="authorityId != null">
+        authority_id,
+      </if>
+      <if test="httpMethod != null">
+        http_method,
+      </if>
+      <if test="antPattern != null">
+        ant_pattern,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="authorityId != null">
+        #{authorityId,jdbcType=INTEGER},
+      </if>
+      <if test="httpMethod != null">
+        #{httpMethod,jdbcType=TINYINT},
+      </if>
+      <if test="antPattern != null">
+        #{antPattern,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shengyecapital.business.dao.entity.Resource">
+    update t_resource
+    <set>
+      <if test="authorityId != null">
+        authority_id = #{authorityId,jdbcType=INTEGER},
+      </if>
+      <if test="httpMethod != null">
+        http_method = #{httpMethod,jdbcType=TINYINT},
+      </if>
+      <if test="antPattern != null">
+        ant_pattern = #{antPattern,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shengyecapital.business.dao.entity.Resource">
+    update t_resource
+    set authority_id = #{authorityId,jdbcType=INTEGER},
+      http_method = #{httpMethod,jdbcType=TINYINT},
+      ant_pattern = #{antPattern,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

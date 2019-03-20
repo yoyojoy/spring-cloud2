@@ -1,0 +1,42 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: api
+  profiles:
+    active: dev
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  servlet:
+    multipart:
+      max-file-size: 400MB
+      max-request-size: 400MB
+
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:9999/uaa/user
+
+zuul:
+  ignored-services: '*'
+  ribbon:
+    eager-load:
+      enabled: true
+
+feign:
+  hystrix:
+    enabled: true
+ribbon:
+  ConnectTimeout: 60000
+  ReadTimeout: 60000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000

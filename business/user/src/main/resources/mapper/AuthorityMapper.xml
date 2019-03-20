@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengyecapital.business.dao.mapper.AuthorityMapper">
+  <resultMap id="BaseResultMap" type="com.shengyecapital.business.dao.entity.Authority">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="system_code" jdbcType="VARCHAR" property="systemCode" />
+    <result column="authority_name" jdbcType="VARCHAR" property="authorityName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
+    <result column="created_by" jdbcType="INTEGER" property="createdBy" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_by" jdbcType="INTEGER" property="updatedBy" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, system_code, authority_name, description, order_num, created_by, created_at, 
+    updated_by, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_authority
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_authority
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shengyecapital.business.dao.entity.Authority">
+    insert into t_authority (id, system_code, authority_name, 
+      description, order_num, created_by, 
+      created_at, updated_by, updated_at
+      )
+    values (#{id,jdbcType=INTEGER}, #{systemCode,jdbcType=VARCHAR}, #{authorityName,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER}, #{createdBy,jdbcType=INTEGER}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=INTEGER}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shengyecapital.business.dao.entity.Authority">
+    insert into t_authority
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="systemCode != null">
+        system_code,
+      </if>
+      <if test="authorityName != null">
+        authority_name,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="orderNum != null">
+        order_num,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedBy != null">
+        updated_by,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="systemCode != null">
+        #{systemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityName != null">
+        #{authorityName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=INTEGER},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shengyecapital.business.dao.entity.Authority">
+    update t_authority
+    <set>
+      <if test="systemCode != null">
+        system_code = #{systemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityName != null">
+        authority_name = #{authorityName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        updated_by = #{updatedBy,jdbcType=INTEGER},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shengyecapital.business.dao.entity.Authority">
+    update t_authority
+    set system_code = #{systemCode,jdbcType=VARCHAR},
+      authority_name = #{authorityName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      created_by = #{createdBy,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=INTEGER},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findByUserId" resultMap="BaseResultMap">
+    SELECT a.* FROM t_authority a
+    INNER JOIN t_role_authority ra ON a.`id` = ra.`authority_id`
+    INNER JOIN t_user_role ur ON ra.`role_id` = ur.`role_id`
+    WHERE ur.user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="loadAuthorityList" resultType="com.shengyecapital.common.dto.user.AuthorityDto">
+    SELECT
+          ta.id AS id,
+	      ta.authority_name AS authorityName,
+	      tr.ant_pattern AS antPattern,
+	      ta.description AS description,
+	      ta.order_num AS orderNum
+    FROM t_authority ta LEFT JOIN t_resource tr ON ta.id = tr.authority_id WHERE ta.authority_name IS NOT NULL AND tr.ant_pattern IS NOT NULL
+    ORDER BY ta.order_num
+  </select>
+</mapper>

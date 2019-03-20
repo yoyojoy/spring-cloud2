@@ -1,0 +1,24 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: user
+  profiles:
+    active: dev
+
+mybatis:
+  mapper-locations[0]: classpath:mapper/*.xml
+
+feign:
+  hystrix:
+    enabled: true
+ribbon:
+  ConnectTimeout: 60000
+  ReadTimeout: 60000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
